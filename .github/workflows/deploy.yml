@@ -37,7 +37,7 @@ jobs:
 
     - name: Deploy to S3
       run: |
-        aws s3 sync build/ ${{ secrets.S3BUCKET }} --delete
+        aws s3 sync build/ s3://dev-photoshelf-bucket --delete
 
     - name: Invalidate CloudFront cache
       run: |
