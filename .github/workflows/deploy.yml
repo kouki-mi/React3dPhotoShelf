@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     permissions:
       id-token: write
@@ -31,13 +32,13 @@ jobs:
     - name: Configure AWS credentials using OIDC
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        role-to-assume: arn:aws:iam::412732064277:role/photoShelfDeploy
+        role-to-assume: ${{ secrets.ROLETOASSUME }}
         aws-region: us-east-1
 
     - name: Deploy to S3
       run: |
-        aws s3 sync build/ s3://my-react-app-bucket --delete
+        aws s3 sync build/ ${{ secrets.S3BUCKET }} --delete
 
     - name: Invalidate CloudFront cache
       run: |
-        aws cloudfront create-invalidation --distribution-id DISTRIBUTION_ID --paths "/*"
+        aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONTDISTRIBUTIONID}} --paths "/*"
