@@ -26,7 +26,7 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build the React app
+    - name: Build and export
       run: npm run build
 
     - name: Configure AWS credentials using OIDC
@@ -37,7 +37,7 @@ jobs:
 
     - name: Deploy to S3
       run: |
-        aws s3 sync build/ s3://dev-photoshelf-bucket --delete
+        aws s3 sync out/ s3://dev-photoshelf-bucket --delete
 
     - name: Invalidate CloudFront cache
       run: |
