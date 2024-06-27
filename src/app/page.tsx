@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Mesh } from 'three';
+import Card from '@/component/card';
 
 type BoxProps = {
   position: [x: number, y: number, z: number];
@@ -35,8 +36,7 @@ const Home: NextPage = () => (
     <Canvas>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      <Card position={[1.2, 0, 0]} scale={1.5} imagePath="/Lil-la.JPG" />
     </Canvas>
   </div>
 );
