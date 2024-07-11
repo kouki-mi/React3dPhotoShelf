@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Mesh } from 'three';
+import Card from '@/component/card';
 
 type BoxProps = {
   position: [x: number, y: number, z: number];
@@ -31,12 +32,22 @@ const Box: React.FC<BoxProps> = (props) => {
 };
 
 const Home: NextPage = () => (
+
   <div style={{ width: '100vw', height: '100vh' }}>
     <Canvas>
+      <color attach="background" args={['#ffffff']} />
       <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      {/* 縦と横に回転 */}
+      <Card position={[0, 0, 3.5]} 
+        scale={1} 
+        imageFront="/ray.jpeg"
+        imageBack="/rio.jpeg"
+        animate={
+          (mesh) => {
+            mesh.rotation.y += 0.01;
+          }
+        }
+      />
     </Canvas>
   </div>
 );
