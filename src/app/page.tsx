@@ -32,11 +32,21 @@ const Box: React.FC<BoxProps> = (props) => {
 };
 
 const Home: NextPage = () => (
+
   <div style={{ width: '100vw', height: '100vh' }}>
     <Canvas>
+      <color attach="background" args={['#ffffff']} />
       <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Card position={[1.2, 0, 0]} scale={1.5} imagePath="/Lil-la.JPG" />
+      {/* 縦と横に回転 */}
+      <Card position={[0, 0, 3.5]} 
+        scale={1} 
+        imagePath="/ray.jpeg"
+        animate={
+          (mesh) => {
+            mesh.rotation.y += 0.01;
+          }
+        }
+      />
     </Canvas>
   </div>
 );
