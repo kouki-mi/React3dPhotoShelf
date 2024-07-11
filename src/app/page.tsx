@@ -40,7 +40,8 @@ const Home: NextPage = () => (
       {/* 縦と横に回転 */}
       <Card position={[0, 0, 3.5]} 
         scale={1} 
-        imagePath="/ray.jpeg"
+        imageFront="/ray.jpeg"
+        imageBack="/rio.jpeg"
         animate={
           (mesh) => {
             mesh.rotation.y += 0.01;

@@ -7,7 +7,8 @@ import * as THREE from 'three';
 type CardProps = {
     position: [x: number, y: number, z: number];
     scale: number;
-    imagePath: string;
+    imageFront: string;
+    imageBack: string;
     animate?: (mesh: Mesh) => void;
 };
 
@@ -19,9 +20,9 @@ type Size = [
 
 export default function Card(props: CardProps){
     const mesh = useRef<Mesh>(null!);
-    const { position, scale, imagePath } = props;
-    const textureLoaderFront = new THREE.TextureLoader().load(imagePath)
-    const textureLoaderBack = new THREE.TextureLoader().load('/rio.jpeg')
+    const { position, scale, imageFront, imageBack } = props;
+    const textureLoaderFront = new THREE.TextureLoader().load(imageFront)
+    const textureLoaderBack = new THREE.TextureLoader().load(imageBack)
     const size: Size = [scale, scale, 0.01];
     useFrame(() => {
         if(props.animate){
