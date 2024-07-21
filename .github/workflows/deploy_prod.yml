@@ -11,3 +11,6 @@ jobs:
     secrets:
       IAMROLETOASSUME: ${{ secrets.ROLETOASSUMEPROD }}
       DISTRIBUTIONID: ${{ secrets.CLOUDFRONTDISTRIBUTIONIDPROD }}
+    permissions:
+        id-token: write
+        contents: read
