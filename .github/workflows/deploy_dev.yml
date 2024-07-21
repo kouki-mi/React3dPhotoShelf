@@ -7,7 +7,10 @@ on:
 
 jobs:
   deploy:
-    uses: kouki-mi/React3dPhotoShelf/.github/workflows/deploy.yml@main
+    uses: kouki-mi/React3dPhotoShelf/.github/workflows/deploy.yml@dev
     secrets:
       IAMROLETOASSUME: ${{ secrets.ROLETOASSUME }}
       DISTRIBUTIONID: ${{ secrets.CLOUDFRONTDISTRIBUTIONID }}
+    permissions:
+      id-token: write
+      contents: read
