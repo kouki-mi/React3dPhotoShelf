@@ -3,6 +3,8 @@ name: Deploy to S3 and Invalidate CloudFront Cache
 on:
   workflow_call:
     secrets:
+        BRANCH:
+          required: true
         IAMROLETOASSUME:
           required: true
         DISTRIBUTIONID:
@@ -37,10 +39,18 @@ jobs:
       with:
         role-to-assume: ${{ secrets.IAMROLETOASSUME }}
         aws-region: us-east-1
+        
+    - name: Set environment variables
+      run: |
+        if [ ${{secrets.BRANCH}} = 'main' ]; then
+          export S3_BUCKET=dev-photoshelf-bucket
+        else
+          export S3_BUCKET=prod-photoshelf-bucket
+        fi
 
     - name: Deploy to S3
       run: |
-        aws s3 sync out/ s3://dev-photoshelf-bucket --delete
+        aws s3 sync build/ s3://$S3_BUCKET --delete
 
     - name: Invalidate CloudFront cache
       run: |

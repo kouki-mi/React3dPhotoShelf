@@ -9,6 +9,7 @@ jobs:
   deploy:
     uses: kouki-mi/React3dPhotoShelf/.github/workflows/deploy.yml@prod
     secrets:
+      BRANCH: 'prod'
       IAMROLETOASSUME: ${{ secrets.ROLETOASSUMEPROD }}
       DISTRIBUTIONID: ${{ secrets.CLOUDFRONTDISTRIBUTIONIDPROD }}
     permissions:
