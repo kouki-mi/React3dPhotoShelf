@@ -1,0 +1,13 @@
+name: deploy to dev
+
+on: 
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  deploy:
+    uses: kouki-mi/React3dPhotoShelf/.github/workflows/deploy.yml@main
+    secrets:
+      IAMROLETOASSUME: ${{ secrets.ROLETOASSUME }}
+      DISTRIBUTIONID: ${{ secrets.CLOUDFRONTDISTRIBUTIONID }}

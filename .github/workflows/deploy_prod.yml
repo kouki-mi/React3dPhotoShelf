@@ -1,0 +1,13 @@
+name: deploy to prod
+
+on: 
+  push:
+    branches:
+      - 'prod'
+
+jobs:
+  deploy:
+    uses: kouki-mi/React3dPhotoShelf/.github/workflows/deploy.yml@prod
+    secrets:
+      IAMROLETOASSUME: ${{ secrets.ROLETOASSUMEPROD }}
+      DISTRIBUTIONID: ${{ secrets.CLOUDFRONTDISTRIBUTIONIDPROD }}
