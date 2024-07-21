@@ -3,6 +3,8 @@ name: Deploy to S3 and Invalidate CloudFront Cache
 on:
   workflow_call:
     secrets:
+        BRANCH:
+          required: true
         IAMROLETOASSUME:
           required: true
         DISTRIBUTIONID:
@@ -38,9 +40,17 @@ jobs:
         role-to-assume: ${{ secrets.IAMROLETOASSUME }}
         aws-region: us-east-1
 
+    - name: Set environment variables
+      run: |
+        if [ ${{secrets.BRANCH}} = 'main' ]; then
+          echo "S3_BUCKET=s3://dev-photoshelf-bucket" >> $GITHUB_ENV
+        else
+          echo "S3_BUCKET=s3://prod-photoshelf-bucket" >> $GITHUB_ENV
+        fi
+
     - name: Deploy to S3
       run: |
-        aws s3 sync out/ s3://dev-photoshelf-bucket --delete
+        aws s3 sync out/ ${{env.S3_BUCKET}} --delete
 
     - name: Invalidate CloudFront cache
       run: |
