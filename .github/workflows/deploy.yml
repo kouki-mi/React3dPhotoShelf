@@ -43,14 +43,14 @@ jobs:
     - name: Set environment variables
       run: |
         if [ ${{secrets.BRANCH}} = 'main' ]; then
-          echo "S3_BUCKET=dev-photoshelf-bucket" >> $GITHUB_ENV
+          echo "S3_BUCKET=s3://dev-photoshelf-bucket" >> $GITHUB_ENV
         else
-          echo "S3_BUCKET=prod-photoshelf-bucket" >> $GITHUB_ENV
+          echo "S3_BUCKET=s3://prod-photoshelf-bucket" >> $GITHUB_ENV
         fi
 
     - name: Deploy to S3
       run: |
-        aws s3 sync out/ s3://$S3_BUCKET --delete
+        aws s3 sync out/ ${{env.S3_BUCKET}} --delete
 
     - name: Invalidate CloudFront cache
       run: |
