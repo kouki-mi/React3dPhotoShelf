@@ -43,9 +43,9 @@ jobs:
     - name: Set environment variables
       run: |
         if [ ${{secrets.BRANCH}} = 'main' ]; then
-          export S3_BUCKET=dev-photoshelf-bucket
+          echo "S3_BUCKET=dev-photoshelf-bucket" >> $GITHUB_ENV
         else
-          export S3_BUCKET=prod-photoshelf-bucket
+          echo "S3_BUCKET=prod-photoshelf-bucket" >> $GITHUB_ENV
         fi
 
     - name: Deploy to S3
