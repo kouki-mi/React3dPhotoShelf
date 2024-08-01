@@ -18,12 +18,12 @@ const Home: NextPage = () => {
   }
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging) return;
+    document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
     const { x, y } = previousMousePosition.current;
     const dx = e.clientX - x;
     const dy = e.clientY - y;
     previousMousePosition.current = { x: e.clientX, y: e.clientY };
     mouseDelta.current = { x: dx, y: dy };
-    console.log(dx, dy);
   }
 
   const handlePointerUp = () => {
