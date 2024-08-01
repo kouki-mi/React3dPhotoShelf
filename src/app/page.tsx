@@ -2,19 +2,10 @@
 
 import { NextPage } from 'next';
 import React, { useRef, useState } from 'react';
-import { Canvas, useFrame, ThreeEvent, events, } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { Mesh, Vector3} from 'three';
+import { Canvas } from '@react-three/fiber';
 import Card from '@/component/card';
 
-const Rig = ({ v = new Vector3() }) => {
-  return useFrame((state) => {
-    state.camera.position.lerp(v.set(state.mouse.x / 2, state.mouse.y / 2, 10), 0.05)
-  })
-};
-
 const Home: NextPage = () => {
-  const [active, setActive] = useState(false);
   //ここでisDraggingとpreviousMousePositionのstateを定義
   const [isDragging, setIsDragging] = useState(false);
   const previousMousePosition = useRef({ x: 0, y: 0 });

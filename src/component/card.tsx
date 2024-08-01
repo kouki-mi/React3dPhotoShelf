@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
-import {TextureLoader, Mesh } from 'three';
-import { ThreeEvent, useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
+import { Mesh } from 'three';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 type CardProps = {
@@ -20,7 +19,7 @@ type Size = [
 
 export default function Card(props: CardProps){
     const mesh = useRef<Mesh>(null!);
-    
+
     useFrame(() => {
         if (props.animate) {
             props.animate(mesh.current);
