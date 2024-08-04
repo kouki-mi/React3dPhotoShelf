@@ -2,6 +2,7 @@
 
 import { NextPage } from 'next';
 import React, { useRef, useState } from 'react';
+import { Mesh } from 'three';
 import { Canvas } from '@react-three/fiber';
 import Card from '@/component/card';
 
@@ -30,6 +31,14 @@ const Home: NextPage = () => {
     setIsDragging(false);
   }
 
+  const dragAnimation = (mesh: Mesh) => {
+    if(isDragging && mouseDelta.current.x !== 0 && mouseDelta.current.y !== 0){
+      mesh.rotation.x += mouseDelta.current.y * 0.01;
+      mesh.rotation.y += mouseDelta.current.x * 0.01;
+      mouseDelta.current = { x: 0, y: 0 };
+    }
+  }
+
   return(
     <div 
       style={{ width: '100vw', height: '100vh' }}
@@ -47,13 +56,7 @@ const Home: NextPage = () => {
           imageBack="/rio.jpeg"
           animate={
             (mesh) => {
-              console.log(isDragging)
-              if(isDragging && mouseDelta.current.x !== 0 && mouseDelta.current.y !== 0){
-                console.log("dragging");
-                mesh.rotation.x += mouseDelta.current.y * 0.01;
-                mesh.rotation.y += mouseDelta.current.x * 0.01;
-                mouseDelta.current = { x: 0, y: 0 };
-              }
+              dragAnimation(mesh);
             }
           }
         />
