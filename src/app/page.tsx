@@ -4,7 +4,10 @@ import { NextPage } from 'next';
 import React, { useRef, useState } from 'react';
 import { Mesh } from 'three';
 import { Canvas } from '@react-three/fiber';
+import {XR, createXRStore} from '@react-three/xr';
 import Card from '@/component/card';
+
+const store = createXRStore();
 
 const Home: NextPage = () => {
   //ここでisDraggingとpreviousMousePositionのstateを定義
@@ -39,6 +42,10 @@ const Home: NextPage = () => {
     }
   }
 
+  const rotateAnimation = (mesh: Mesh) => {
+    mesh.rotation.y += 0.01;
+  }
+
   return(
     <div 
       style={{ width: '100vw', height: '100vh' }}
@@ -46,20 +53,23 @@ const Home: NextPage = () => {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
     >
+      <button onClick={() => store.enterAR()}>Enter AR</button>
       <Canvas>
-        <color attach="background" args={['#ffffff']} />
-        <ambientLight />
-        {/* 縦と横に回転 */}
-        <Card position={[0, 0, 3.5]} 
-          scale={1}
-          imageFront="/ray.jpeg"
-          imageBack="/rio.jpeg"
-          animate={
-            (mesh) => {
-              dragAnimation(mesh);
-            }
-          }
-        />
+          <XR store={store}>
+            <color attach="background" args={['#ffffff']} />
+            <ambientLight />
+            {/* 縦と横に回転 */}
+            <Card position={[0, 0, 3.5]} 
+              scale={1}
+              imageFront="/ray.jpeg"
+              imageBack="/rio.jpeg"
+              animate={
+                (mesh) => {
+                  rotateAnimation(mesh);
+                }
+              }
+            />
+          </XR>
       </Canvas>
     </div>
   );
