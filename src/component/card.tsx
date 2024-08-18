@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+"use client"
+import React, { useRef} from 'react';
 import { Mesh } from 'three';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';

@@ -3,17 +3,26 @@
 import { NextPage } from 'next';
 import React, { useRef, useState } from 'react';
 import { Mesh } from 'three';
-import { Canvas } from '@react-three/fiber';
-import {XR, createXRStore} from '@react-three/xr';
+import { Canvas, useThree } from '@react-three/fiber';
 import Card from '@/component/card';
-
-const store = createXRStore();
+import { useARToolKit } from '@/hooks/useARToolKit';
 
 const Home: NextPage = () => {
   //ここでisDraggingとpreviousMousePositionのstateを定義
   const [isDragging, setIsDragging] = useState(false);
   const previousMousePosition = useRef({ x: 0, y: 0 });
   const mouseDelta = useRef({ x: 0, y: 0 });
+
+  //ARの設定
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { camera, scene } = useThree();
+  const { arToolkitSource, arToolkitContext, arToolkitMarker } = useARToolKit({
+    domElement: canvasRef.current!,
+    camera,
+    cameraParametersUrl: '/camera_para.dat',
+    markerPatternUrl: '/hiro.patt',
+    scene,
+  });
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -34,13 +43,13 @@ const Home: NextPage = () => {
     setIsDragging(false);
   }
 
-  const dragAnimation = (mesh: Mesh) => {
-    if(isDragging && mouseDelta.current.x !== 0 && mouseDelta.current.y !== 0){
-      mesh.rotation.x += mouseDelta.current.y * 0.01;
-      mesh.rotation.y += mouseDelta.current.x * 0.01;
-      mouseDelta.current = { x: 0, y: 0 };
-    }
-  }
+  // const dragAnimation = (mesh: Mesh) => {
+  //   if(isDragging && mouseDelta.current.x !== 0 && mouseDelta.current.y !== 0){
+  //     mesh.rotation.x += mouseDelta.current.y * 0.01;
+  //     mesh.rotation.y += mouseDelta.current.x * 0.01;
+  //     mouseDelta.current = { x: 0, y: 0 };
+  //   }
+  // }
 
   const rotateAnimation = (mesh: Mesh) => {
     mesh.rotation.y += 0.01;
@@ -53,23 +62,20 @@ const Home: NextPage = () => {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
     >
-      <button onClick={() => store.enterAR()}>Enter AR</button>
-      <Canvas>
-          <XR store={store}>
-            <color attach="background" args={['#ffffff']} />
-            <ambientLight />
-            {/* 縦と横に回転 */}
-            <Card position={[0, 0, 3.5]} 
-              scale={1}
-              imageFront="/ray.jpeg"
-              imageBack="/rio.jpeg"
-              animate={
-                (mesh) => {
-                  rotateAnimation(mesh);
-                }
+      <Canvas ref={canvasRef}>
+          <color attach="background" args={['#ffffff']} />
+          <ambientLight />
+          {/* 縦と横に回転 */}
+          <Card position={[0, 0, 3.5]} 
+            scale={1}
+            imageFront="/ray.jpeg"
+            imageBack="/rio.jpeg"
+            animate={
+              (mesh) => {
+                rotateAnimation(mesh);
               }
-            />
-          </XR>
+            }
+          />
       </Canvas>
     </div>
   );
