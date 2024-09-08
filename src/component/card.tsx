@@ -1,4 +1,3 @@
-"use client"
 import React, { useRef} from 'react';
 import { Mesh } from 'three';
 import { useFrame } from '@react-three/fiber';

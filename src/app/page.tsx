@@ -1,28 +1,17 @@
 "use client"
-
 import { NextPage } from 'next';
 import React, { useRef, useState } from 'react';
 import { Mesh } from 'three';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import Card from '@/component/card';
-import { useARToolKit } from '@/hooks/useARToolKit';
+import ArScene from '@/component/arScene';
 
 const Home: NextPage = () => {
   //ここでisDraggingとpreviousMousePositionのstateを定義
   const [isDragging, setIsDragging] = useState(false);
   const previousMousePosition = useRef({ x: 0, y: 0 });
   const mouseDelta = useRef({ x: 0, y: 0 });
-
-  //ARの設定
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { camera, scene } = useThree();
-  const { arToolkitSource, arToolkitContext, arToolkitMarker } = useARToolKit({
-    domElement: canvasRef.current!,
-    camera,
-    cameraParametersUrl: '/camera_para.dat',
-    markerPatternUrl: '/hiro.patt',
-    scene,
-  });
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -63,19 +52,9 @@ const Home: NextPage = () => {
       onPointerUp={handlePointerUp}
     >
       <Canvas ref={canvasRef}>
-          <color attach="background" args={['#ffffff']} />
-          <ambientLight />
+          <ArScene canvasRef={canvasRef} />
           {/* 縦と横に回転 */}
-          <Card position={[0, 0, 3.5]} 
-            scale={1}
-            imageFront="/ray.jpeg"
-            imageBack="/rio.jpeg"
-            animate={
-              (mesh) => {
-                rotateAnimation(mesh);
-              }
-            }
-          />
+          
       </Canvas>
     </div>
   );
