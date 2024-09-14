@@ -1,5 +1,5 @@
 ## 概要
-これはReactThreeFiber(https://github.com/pmndrs/react-three-fiber)を使用して画像を立体的に表示するアプリです。<br/>
+これはReactThreeFiber(https://github.com/pmndrs/react-three-fiber) を使用して画像を立体的に表示するアプリです。<br/>
 URLを開くと以下のデモのような形で画像が表示されます。
 現在は自分の好きなVtuberの画像を表示しています。
 
