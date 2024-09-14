@@ -6,6 +6,11 @@ URLを開くと以下のデモのような形で画像が表示されます。
 ## デモ
 URL: https://du0x9iwbi3g0v.cloudfront.net
 
+https://github.com/user-attachments/assets/f260487f-1716-4e25-ac6a-b0e7eddf0dfb
+
+
+
+
 ## 使用した主な技術
 - typeScript
 - three.js
